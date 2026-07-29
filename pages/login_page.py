@@ -32,5 +32,5 @@ class LoginPage:
         element.click()
 
     def get_success_message(self):
-        element = self.wait.until(EC.visibility_of_element_locator(self.SUCCESS_MESSAGE))
+        element = self.wait.until(EC.visibility_of_element_located(self.SUCCESS_MESSAGE))
         return element.text
