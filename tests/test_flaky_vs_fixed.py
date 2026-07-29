@@ -5,7 +5,9 @@ from selenium.webdriver.common.by import By
 
 # -------------------------------------------------------------------
 # ❌ FLAKY APPROACH (Sleeps + Hardcoded Delays = High Failure Rate in CI)
+# Marked with @pytest.mark.xfail so CI pipeline passes while demonstrating anti-pattern
 # -------------------------------------------------------------------
+@pytest.mark.xfail(reason="Demonstrating flaky test anti-pattern with hard sleep")
 def test_flaky_login_approach(driver):
     """
     Demonstrates why hard sleeps cause flaky test failures in CI pipelines.
