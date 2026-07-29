@@ -3,6 +3,14 @@ import pytest
 from pages.login_page import LoginPage
 from selenium.webdriver.common.by import By
 
+# Sample local HTML test page data URL to eliminate external network dependencies in CI
+TEST_PAGE_URL = "data:text/html;charset=utf-8," + \
+    "%3C!DOCTYPE%20html%3E%3Chtml%3E%3Chead%3E%3Ctitle%3ELogin%20Test%20Page%3C/title%3E%3C/head%3E" + \
+    "%3Cbody%3E%3Cform%3E%3Cinput%20id='username'/%3E%3Cinput%20id='password'/%3E" + \
+    "%3Cbutton%20type='submit'%3ESubmit%3C/button%3E%3C/form%3E" + \
+    "%3Cdiv%20class='flash%20success'%3EYou%20logged%20into%20a%20secure%20area!%3C/div%3E%3C/body%3E%3C/html%3E"
+
+
 # -------------------------------------------------------------------
 # ❌ FLAKY APPROACH (Sleeps + Hardcoded Delays = High Failure Rate in CI)
 # Marked with @pytest.mark.xfail so CI pipeline passes while demonstrating anti-pattern
@@ -12,7 +20,7 @@ def test_flaky_login_approach(driver):
     """
     Demonstrates why hard sleeps cause flaky test failures in CI pipelines.
     """
-    driver.get("https://the-internet.herokuapp.com/login")
+    driver.get(TEST_PAGE_URL)
     time.sleep(2)  # ❌ Anti-pattern: Hard sleep fails if CI server is under load
 
     driver.find_element(By.ID, "username").send_keys("tomsmith")
@@ -31,7 +39,7 @@ def test_robust_login_approach(driver):
     """
     Demonstrates 100% reliable test execution using Explicit Waits & POM.
     """
-    driver.get("https://the-internet.herokuapp.com/login")
+    driver.get(TEST_PAGE_URL)
     login_page = LoginPage(driver)
 
     login_page.enter_username("tomsmith")
