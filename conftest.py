@@ -6,7 +6,6 @@ from selenium.webdriver.chrome.options import Options
 def driver():
     """
     Headless Chrome driver fixture configured for containerized CI/CD execution.
-    Uses Selenium 4 built-in Selenium Manager for automatic browser driver matching.
     """
     options = Options()
     options.add_argument("--headless=new")
